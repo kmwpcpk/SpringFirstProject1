@@ -1,5 +1,6 @@
-package board;
+package com.example;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -13,32 +14,21 @@ import java.util.List;
 public class MVCBoardDAO {
 
     @Autowired
-    JdbcTemplate jdbcTemplate;
+    SqlSession sqlSession;
 
     public int insertBoard(MVCBoardVO vo){
-        String sql = "insert into BOARD (title, writer, content, category) values ("
-                + "'" + vo.getTitle() + "',"
-                + "'" + vo.getWriter() + "',"
-                + "'" + vo.getContent() + "',"
-                + "'" + vo.getCategory() + "')";
-
-        return jdbcTemplate.update(sql);
+        int result = sqlSession.insert("MVCBoard.insertBoard", vo);
+        return result;
     }
 
     public int deleteBoard(int seq){
-        String sql = "delete from BOARD where seq = " + seq;
-        return jdbcTemplate.update(sql);
+        int result = sqlSession.delete("MVCBoard.deleteBoard", seq);
+        return result;
     }
 
     public int updateBoard(MVCBoardVO vo){
-        String sql = "update BOARD set title='" + vo.getTitle() + "',"
-                + " title='" + vo.getTitle() + "',"
-                + " writer='" + vo.getWriter() + "',"
-                + " content='" + vo.getContent() + "',"
-                + " category='" + vo.getCategory() + "' where seq=" + vo.getSeq();
-
-        return jdbcTemplate.update(sql);
-
+        int result = sqlSession.update("MVCBoard.updateBoard", vo);
+        return result;
     }
 
     class BoardRowMapper implements RowMapper<MVCBoardVO>{
@@ -51,6 +41,9 @@ public class MVCBoardDAO {
             vo.setContent(rs.getString("content"));
             vo.setWriter(rs.getString("writer"));
             vo.setCategory(rs.getString("category"));
+            vo.setTitle(rs.getString("rc"));
+            vo.setTitle(rs.getString("response"));
+            vo.setTitle(rs.getString("team"));
             vo.setRegdate(rs.getDate("regdate"));
 
             return vo;
@@ -59,13 +52,13 @@ public class MVCBoardDAO {
     }
 
     public MVCBoardVO getBoard(int seq){
-        String sql = "select * from BOARD where seq=" + seq;
-        return jdbcTemplate.queryForObject(sql, new BoardRowMapper());
+        MVCBoardVO one = sqlSession.selectOne("MVCBoard.getBoard", seq);
+        return one;
     }
 
     public List<MVCBoardVO> getBoardList(){
-        String sql = "select * from BOARD order by regdate desc";
-        return jdbcTemplate.query(sql, new BoardRowMapper());
+        List<MVCBoardVO> list = sqlSession.selectList("MVCBoard.getBoardList");
+        return list;
     }
 }
 

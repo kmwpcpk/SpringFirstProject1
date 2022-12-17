@@ -1,4 +1,4 @@
-package board;
+package com.example;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +24,6 @@ public class HomeController {
         list.add("자바프로그래밍");
         model.addAttribute("classList",list);
 
-        return "list1";
+        return "list";
     }
 }

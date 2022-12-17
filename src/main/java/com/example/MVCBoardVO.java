@@ -1,4 +1,4 @@
-package board;
+package com.example;
 
 import java.util.Date;
 
@@ -7,7 +7,10 @@ public class MVCBoardVO {
     private String category;
     private String title;
     private String writer;
+    private String rc;
+    private String response;
     private String content;
+    private String team;
     private Date regdate;
     private int cnt;
 
@@ -41,6 +44,30 @@ public class MVCBoardVO {
 
     public void setWriter(String writer) {
         this.writer = writer;
+    }
+
+    public String getRc() {
+        return rc;
+    }
+
+    public void setRc(String rc) {
+        this.rc = rc;
+    }
+
+    public String getResponse() {
+        return response;
+    }
+
+    public void setResponse(String response) {
+        this.response = response;
+    }
+
+    public String getTeam() {
+        return team;
+    }
+
+    public void setTeam(String team) {
+        this.team = team;
     }
 
     public String getContent() {

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MVCBoard">
+    <insert id="insertBoard">
+        insert into TEAM (category, title, writer, rc, team, content, response)
+        values (#{category} , #{title} , #{writer} , #{rc}, #{team}, #{content}, #{response})
+    </insert>
+    <update id="updateBoard">
+        update TEAM
+        set category=#{category}, title=#{title}, rc=#{rc}, team=#{team}, content=#{content}, response=#{response} where seq=#{seq}
+    </update>
+    <delete id="deleteBoard">
+        delete from TEAM where seq=#{seq}
+    </delete>
+    <select id="getBoard" resultType="board">
+        select * from TEAM where seq=#{seq}
+    </select>
+    <select id="getBoardList" resultType="board">
+        select * from TEAM order by seq desc
+    </select>
+</mapper>
